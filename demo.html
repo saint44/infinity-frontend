@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Demo - Infinity Nexus</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    main.demo {
+      width: 80%;
+      margin: auto;
+      text-align: center;
+    }
+    form {
+      margin: 2rem 0;
+    }
+    input[type="text"] {
+      width: 70%;
+      padding: 0.5rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 1rem;
+      text-align: left;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Infinity Nexus API Demo</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="demo.html">API Demo</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="demo">
+    <h2>Test the Echo Endpoint</h2>
+    <p>Enter a message and see the API echo it back.</p>
+    <form id="echo-form">
+      <input type="text" id="message" placeholder="Type your message here" required>
+      <button type="submit">Send</button>
+    </form>
+    <h3>Response:</h3>
+    <pre id="response"></pre>
+  </main>
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Infinity Nexus - All rights reserved.</p>
+    </div>
+  </footer>
+  <script>
+    const API_BASE = 'https://honey-api-htdd.onrender.com';
+    document.getElementById('echo-form').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const message = document.getElementById('message').value;
+      try {
+        const res = await fetch(`${API_BASE}/echo/${encodeURIComponent(message)}`);
+        const data = await res.json();
+        document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        document.getElementById('response').textContent = 'Error: ' + error.message;
+      }
+    });
+  </script>
+</body>
+</html>
